@@ -452,5 +452,3 @@ const hiraganaMap = () => {
     });
     return mapData;
 }
-
-console.log(hiraganaMap());

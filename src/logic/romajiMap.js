@@ -6134,5 +6134,3 @@ const romajiMap = () => {
   });
   return mapData;
 };
-
-console.log(romajiMap());
