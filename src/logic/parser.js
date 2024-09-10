@@ -25,6 +25,7 @@ class Parser {
         this.numberOfCorrectChars = 0;
         this.numberOfMissedChars = 0;
         this.numberOfCorrectSentences = 0;
+        this.hiraganaMap = hiraganaMap();
     }
 
     // ローマ字をひらがなに変換する
@@ -64,7 +65,7 @@ class Parser {
         this.parsedData = parsedData;
         const hiraganaSentence = document.getElementById("hiragana-sentence");
         if(hiraganaSentence) {
-            hiraganaSentence.textContent = "しんちくまんしょん";
+            hiraganaSentence.textContent = "しんかんせん";
         }
     }
 
@@ -82,8 +83,36 @@ class Parser {
             if(key == parsedData[this.idx1][this.pattern[this.idx1]][this.idx2]) { //正解した場合
                 this.hiraganaTemp += key; //ひらがな色付けのために入力された文字を一時保存
                 sentence.innerHTML = this.colorTypedRoma();
+                if(this.hiraganaMap.get(this.hiraganaTemp) && this.hiraganaMap.get(this.hiraganaTemp).length == 1) { //保存したひらがながhiraganamapのひらがなと一致した場合,そのひらがなを色付け
+                    hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                    this.kanaIdx++;
+                    this.hiraganaTemp = "";
+                } else if(this.hiraganaMap.get(this.hiraganaTemp) && this.hiraganaMap.get(this.hiraganaTemp).length == 2) {
+                    hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                    this.kanaIdx++;
+                    hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                    this.kanaIdx++;
+                    this.hiraganaTemp = "";
+                } else if(this.hiraganaMap.get(this.hiraganaTemp) && this.hiraganaMap.get(this.hiraganaTemp).length == 3) {
+                    hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                    this.kanaIdx++;
+                    hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                    this.kanaIdx++;
+                    hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                    this.kanaIdx++;
+                    this.hiraganaTemp = "";
+                } else if(key == "n" && (this.prevChar == "n" || this.prevChar == "")) { //nが入力された時の特別な処理
+                    this.prevChar = key;
+                    this.hiraganaTemp = "";
+                } else if(key == "n" && (nextChar !== "a" && nextChar !== "i" && nextChar !== "u" && nextChar !== "e" && nextChar !== "o" && nextChar !== "n")) {
+                    hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                    this.kanaIdx++;
+                    this.hiraganaTemp = "";
+                } else if (key == "n" && this.prevChar == "n") {
+                    this.hiraganaTemp = "";
+                }
+                this.prevChar = key
                 this.idx2++;
-                console.log("correct");
                 if(this.idx2 == parsedData[this.idx1][this.pattern[this.idx1]].length) {
                     if(this.idx1 == parsedData.length -1) {
                         //todo 終了
@@ -105,8 +134,35 @@ class Parser {
                 }
                 if(key == parsedData[this.idx1][this.pattern[this.idx1]][this.idx2]) {
                     this.hiraganaTemp += key;
-                    console.log("correct");
                     sentence.innerHTML = this.colorTypedRoma();
+                    if(this.hiraganaMap.get(this.hiraganaTemp) && this.hiraganaMap.get(this.hiraganaTemp).length == 1) { //保存したひらがながhiraganamapのひらがなと一致した場合,そのひらがなを色付け
+                        hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                        this.kanaIdx++;
+                        this.hiraganaTemp = "";
+                    } else if(this.hiraganaMap.get(this.hiraganaTemp) && this.hiraganaMap.get(this.hiraganaTemp).length == 2) {
+                        hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                        this.kanaIdx++;
+                        hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                        this.kanaIdx++;
+                        this.hiraganaTemp = "";
+                    } else if(this.hiraganaMap.get(this.hiraganaTemp) && this.hiraganaMap.get(this.hiraganaTemp).length == 3) {
+                        hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                        this.kanaIdx++;
+                        hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                        this.kanaIdx++;
+                        hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                        this.kanaIdx++;
+                        this.hiraganaTemp = "";
+                    } else if(key == "n" && (this.prevChar == "n" || this.prevChar == "")) { //nが入力された時の特別な処理
+                        this.prevChar = key;
+                        this.hiraganaTemp = "";
+                    } else if(key == "n" && (nextChar !== "a" && nextChar !== "i" && nextChar !== "u" && nextChar !== "e" && nextChar !== "o" && nextChar !== "n")) {
+                        hiraganaSentence.innerHTML = this.colorTypedJapanese();
+                        this.kanaIdx++;
+                        this.hiraganaTemp = "";
+                    } else if (key == "n" && this.prevChar == "n") {
+                        this.hiraganaTemp = "";
+                    }
                     this.prevChar = key;
                     this.idx2++;
                     if(this.idx2 !== this.parsedData[this.idx1][this.pattern[this.idx1]].length) {
@@ -193,12 +249,14 @@ class Parser {
 
 
 const parser = new Parser();
-parser.build("しんばし");
+parser.build("しんかんせん");
 document.onkeydown = (e) => {
     const key = e.key;
-    console.log(key);
+    //console.log(key);
     parser.check(parser.parsedData, key);
-   // console.log(parser.idx1)
-    console.log(parser.temp)
+    console.log(parser.hiraganaTemp)
+    console.log(parser.hiraganaMap.get(parser.hiraganaTemp))
+    //console.log(parser.idx1)
+    //console.log(parser.temp)
     //onsole.log(parser.idx2)
 }

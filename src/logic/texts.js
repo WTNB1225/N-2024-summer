@@ -1,0 +1,7 @@
+const textWithKanji = [
+
+];
+
+const textOnlyHiragana = [
+
+];
