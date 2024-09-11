@@ -1,18 +1,4 @@
 class Parser {
-    pattern;
-    idx1;
-    idx2;
-    kanaIdx;
-    text1; //通常の文章
-    text2; //すべてひらがなの文章
-    previousChar; //前に入力した文字
-    parsedData; //ひらがなのパターンに変換したデータ
-    temp;
-    hiraganaTemp;
-    numberOfCorrectChars;
-    numberOfMissedChars;
-    numberOfCorrectSentences;
-
     constructor() {
         this.pattern = [];
         this.idx1 = 0;
@@ -64,8 +50,12 @@ class Parser {
         this.pattern = new Array(parsedData.length).fill(0); 
         this.parsedData = parsedData;
         const hiraganaSentence = document.getElementById("hiragana-sentence");
+        const japaneseSentence = document.getElementById("japanese-sentence");
         if(hiraganaSentence) {
-            hiraganaSentence.textContent = "しんかんせん";
+            hiraganaSentence.textContent = this.text2;
+        }
+        if(japaneseSentence) {
+            japaneseSentence.textContent = this.text1;
         }
     }
 
@@ -75,7 +65,7 @@ class Parser {
         const hiraganaSentence = document.getElementById("hiragana-sentence");
         let tempIdx = this.idx2;
 
-        const nextChar = parsedData[this.idx1][this.pattern[this.idx1]][tempIdx+1];
+        const nextChar = parsedData[this.idx1][this.pattern[this.idx1]][tempIdx+1] || "";
         if(key == "Escape") {
             //todo 中断
         } else {
@@ -113,9 +103,9 @@ class Parser {
                 }
                 this.prevChar = key
                 this.idx2++;
+                this.numberOfCorrectChars++;
                 if(this.idx2 == parsedData[this.idx1][this.pattern[this.idx1]].length) {
                     if(this.idx1 == parsedData.length -1) {
-                        //todo 終了
                         sentence.textContent = "";
                     } else {
                         this.idx1++;
@@ -165,12 +155,14 @@ class Parser {
                     }
                     this.prevChar = key;
                     this.idx2++;
+                    this.numberOfCorrectChars++;
                     if(this.idx2 !== this.parsedData[this.idx1][this.pattern[this.idx1]].length) {
                         return;
                     }
                 } else {
                     //どのパターンにも含まれていない場合は、仮保存した文字を削除
                     this.temp = this.temp.slice(0, -1);
+                    this.numberOfMissedChars++;
                 }
 
                 if(this.idx2 == parsedData[this.idx1][this.pattern[this.idx1]].length) {
@@ -190,7 +182,7 @@ class Parser {
 
     //文章を最後まで入力したかを確認するメソッド
     isFinished() {
-        if(this.idx2 == thid.parsedData[this.idx1][this.pattern[this.idx1]].length && this.idx1 == this.parsedData.length - 1) {
+        if(this.idx2 == this.parsedData[this.idx1][this.pattern[this.idx1]].length && this.idx1 == this.parsedData.length - 1) {
             this.idx1 = 0;
             this.idx2 = 0;
             this.temp = "";
@@ -198,7 +190,7 @@ class Parser {
             this.kanaIdx = 0;
             this.prevChar = "";
             this.pattern = [];
-            this.parsedData = [];
+            this.parsedData = [[]];
             this.numberOfCorrectSentences++;
             return true;
         } else {
@@ -245,18 +237,28 @@ class Parser {
         this.text1 = text1;
         this.text2 = text2;
     }
+
+    getScore() {
+        return {
+            correct: this.numberOfCorrectChars,
+            missed: this.numberOfMissedChars,
+            sentences: this.numberOfCorrectSentences,
+            accuracy: this.numberOfCorrectChars / (this.numberOfCorrectChars + this.numberOfMissedChars) * 100,
+            wpm: (this.numberOfCorrectChars + this.numberOfMissedChars) / 120 * 60
+        }
+    }
 }
 
 
-const parser = new Parser();
-parser.build("しんかんせん");
-document.onkeydown = (e) => {
-    const key = e.key;
+//const parser = new Parser();
+//parser.build("しんかんせん");
+//document.onkeydown = (e) => {
+//    const key = e.key;
     //console.log(key);
-    parser.check(parser.parsedData, key);
-    console.log(parser.hiraganaTemp)
-    console.log(parser.hiraganaMap.get(parser.hiraganaTemp))
+//    parser.check(parser.parsedData, key);
+//    console.log(parser.hiraganaTemp)
+//    console.log(parser.hiraganaMap.get(parser.hiraganaTemp))
     //console.log(parser.idx1)
     //console.log(parser.temp)
     //onsole.log(parser.idx2)
-}
+//}
