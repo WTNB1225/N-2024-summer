@@ -239,11 +239,12 @@ class Parser {
     }
 
     getScore() {
+        let accuracyValue = this.numberOfCorrectChars / (this.numberOfCorrectChars + this.numberOfMissedChars) * 100
         return {
             correct: this.numberOfCorrectChars,
             missed: this.numberOfMissedChars,
             sentences: this.numberOfCorrectSentences,
-            accuracy: this.numberOfCorrectChars / (this.numberOfCorrectChars + this.numberOfMissedChars) * 100,
+            accuracy: isNaN(accuracyValue) ? "error" : accuracyValue,
             wpm: (this.numberOfCorrectChars + this.numberOfMissedChars) / 120 * 60
         }
     }
