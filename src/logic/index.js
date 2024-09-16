@@ -1,23 +1,73 @@
-const randomNumber = Math.floor(Math.random() * theme1HiraganaOnlyTexts.length);
 const parser = new Parser();
 const sentence = document.getElementById('sentence');
+const sentenceContainer = document.getElementById('sentence-container');
 const hiraganaSentence = document.getElementById('hiragana-sentence');
 const japaneseSentence = document.getElementById('japanese-sentence');
 const remainingTimeDom = document.getElementById('time');
-let remainingTime = 2;
+const promptDom = document.getElementById('prompt');
+const promptSubmitDom = document.getElementById('prompt-submit');
+const promptContainer = document.getElementById('prompt-container');
+const loadingDom = document.getElementById('loading');
+let text1 = [];
+let text2 = [];
+let remainingTime = 100;
 let countDownTime = 3;
 let parsedData;
-parser.setData(theme1NormalTexts[randomNumber], theme1HiraganaOnlyTexts[randomNumber]);
-const countDown = setInterval(() => {
-    countDownTime -= 1;
-    remainingTimeDom.textContent = countDownTime;
-    if(countDownTime === 0) {
-        clearInterval(countDown);
-        parsedData = parser.build(parser.text2);
-        remainingTimeDom.textContent = remainingTime;
-        activeInterval();
+
+promptSubmitDom.addEventListener('click', () => {
+    const prompt = promptDom.value;
+    generateText(prompt);
+    promptContainer.classList.add('innactive');
+});
+
+async function generateText(prompt) {
+    const url = 'https://nyobi-backend.onrender.com/chatgpt';
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({prompt: prompt})
+        });
+        if(!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const json = await response.json();
+        console.log(json);
+        const data = json.replace(/\n\n/g, "\n");
+        data.split('\n').forEach((value, idx) => {
+            if(idx % 2 === 0) {
+                text1.push(value);
+            } else {
+                text2.push(value);
+            }
+        });
+        const randomNumber = Math.floor(Math.random() * text1.length);
+        parser.setData(text1[randomNumber], text2[randomNumber]);
+        activeCountDown();
+        return json
+    } catch (error) {
+        console.error('Error:', error);
+        return;
     }
-}, 1000);
+}
+
+function activeCountDown() {
+    loadingDom.classList.add('innactive');
+    remainingTimeDom.classList.remove('innactive');
+    sentenceContainer.classList.remove('innactive');
+    const countDown = setInterval(() => {
+        countDownTime -= 1;
+        remainingTimeDom.textContent = countDownTime;
+        if(countDownTime === 0) {
+            clearInterval(countDown);
+            parsedData = parser.build(parser.text2);
+            remainingTimeDom.textContent = remainingTime;
+            activeInterval();
+        }
+    }, 1000);
+}
 
 function activeInterval() {
     const interval = setInterval(() => {
@@ -36,15 +86,16 @@ function activeInterval() {
     }, 1000);
 }
 
+
 document.onkeydown = (e) => {
     const key = e.key;
     console.log(key);
     parser.check(parser.parsedData, key);  
     if(parser.isFinished()) {
-        const randomNumber = Math.floor(Math.random() * theme1HiraganaOnlyTexts.length);
-        parsedData = parser.build(theme1HiraganaOnlyTexts[randomNumber]);
-        japaneseSentence.textContent = theme1NormalTexts[randomNumber];
-        hiraganaSentence.textContent = theme1HiraganaOnlyTexts[randomNumber];
-
+        const randomNumber = Math.floor(Math.random() * text1.length);
+        parsedData = parser.build(text2[randomNumber]);
+        japaneseSentence.textContent = text1[randomNumber];
+        hiraganaSentence.textContent = text2[randomNumber];
     }
 }
+
