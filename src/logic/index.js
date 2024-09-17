@@ -18,6 +18,7 @@ promptSubmitDom.addEventListener('click', () => {
     const prompt = promptDom.value;
     generateText(prompt);
     promptContainer.classList.add('innactive');
+    loadingDom.classList.remove('innactive');
 });
 
 async function generateText(prompt) {

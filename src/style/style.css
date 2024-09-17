@@ -36,5 +36,17 @@ p {
     line-height: 1.5;
 }
 .innactive {
-    display: none;
+    display: none !important;
+}
+
+.mt-center {
+    margin-top: 16rem;
+}
+
+.input {
+    width: 30rem;
+}
+
+.input::placeholder {
+    text-align: center;
 }
