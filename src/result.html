@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./style/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./style/style.css" />
     <title>Result</title>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  </head>
+  <body>
+    <div class="vh-100">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="./index.html">Home</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
@@ -23,25 +35,35 @@
           </div>
         </div>
       </nav>
-    <div class="container d-flex flex-column justify-content-center align-items-center mt-center">
+      <div
+        class="container d-flex flex-column justify-content-center align-items-center mt-center"
+      >
         <div class="row">
-            <div class="col-12 text-center" id="result-div">
-                <h1 class="mb-4">Result</h1>
-                <p class="lead">Correct: <span id="correct" class="font-weight-bold"></span></p>
-                <p class="lead">Incorrect: <span id="incorrect" class="font-weight-bold"></span></p>
-                <p class="lead">Accuracy: <span id="accuracy" class="font-weight-bold"></span></p>
-                <p class="lead">WPM: <span id="wpm" class="font-weight-bold"></span></p>
-            </div>
-            <div class="col-12 text-center">
-              <div id="error"></div>
-              <button id="retry" class="btn btn-primary mt-3">Play</button>
-            </div>
+          <div class="col-12 text-center" id="result-div">
+            <h1 class="mb-4">Result</h1>
+            <p class="lead">
+              Correct: <span id="correct" class="font-weight-bold"></span>
+            </p>
+            <p class="lead">
+              Incorrect: <span id="incorrect" class="font-weight-bold"></span>
+            </p>
+            <p class="lead">
+              Accuracy: <span id="accuracy" class="font-weight-bold"></span>
+            </p>
+            <p class="lead">
+              WPM: <span id="wpm" class="font-weight-bold"></span>
+            </p>
+          </div>
+          <div class="col-12 text-center">
+            <div id="error"></div>
+            <button id="retry" class="btn btn-primary mt-3">Play</button>
+          </div>
         </div>
-
+      </div>
     </div>
     <script src="./logic/result.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>

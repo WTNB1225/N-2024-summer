@@ -1,54 +1,87 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./style/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./style/style.css" />
     <title>Nyobi typing</title>
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="./index.html">Home</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="./game.html">Game</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="container d-flex justify-content-center align-items-center mt-center" id="prompt-container">
-      <div class="row d-flex justify-content-center align-items-center flex-column">
-          <input type="text" class="form-control input" id="prompt" placeholder="文章のテーマを入力してください">
-          <button class="btn btn-primary mt-3" id="prompt-submit">送信</button>
-      </div>
-  </div>
-  <div class="container d-flex justify-content-center innactive mt-center" id="loading">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden"></span>
-    </div>
-  </div>
-  <div class="container d-flex flex-column justify-content-center mt-center innactive" id="sentence-container">
-      <div class="row">
-          <div class="col-12 text-center">
-              <div id="time" class="time mb-3 innactive">3</div>
-              <p class="japanese-sentence" id="japanese-sentence"></p>
-              <p id="hiragana-sentence" class="hiragana-sentence mb-3 kana"></p>
-              <p id="sentence" class="sentence mb-3"></p>
+  </head>
+  <body>
+    <div class="vh-100">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./index.html">Home</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="./game.html">Game</a>
+              </li>
+            </ul>
           </div>
+        </div>
+      </nav>
+      <div
+        class="container d-flex justify-content-center align-items-center mt-center"
+        id="prompt-container"
+      >
+        <div
+          class="row d-flex justify-content-center align-items-center flex-column"
+        >
+          <input
+            type="text"
+            class="form-control input"
+            id="prompt"
+            placeholder="文章のテーマを入力してください"
+          />
+          <button class="btn btn-primary mt-3" id="prompt-submit">送信</button>
+        </div>
       </div>
-  </div>
+      <div
+        class="container d-flex justify-content-center innactive mt-center"
+        id="loading"
+      >
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden"></span>
+        </div>
+      </div>
+      <div
+        class="container d-flex flex-column justify-content-center mt-center innactive"
+        id="sentence-container"
+      >
+        <div class="row">
+          <div class="col-12 text-center">
+            <div id="time" class="time mb-3 innactive">3</div>
+            <p class="japanese-sentence" id="japanese-sentence"></p>
+            <p id="hiragana-sentence" class="hiragana-sentence mb-3 kana"></p>
+            <p id="sentence" class="sentence mb-3"></p>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="./logic/hiraganaMap.js"></script>
     <script src="./logic/romajiMap.js"></script>
     <script src="./logic/parser.js"></script>
     <script src="./logic/texts.js"></script>
     <script src="./logic/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
