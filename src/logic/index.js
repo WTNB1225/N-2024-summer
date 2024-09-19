@@ -15,7 +15,7 @@ let countDownTime = 3;
 let parsedData;
 
 promptSubmitDom.addEventListener('click', () => {
-    const prompt = promptDom.value;
+    const prompt = `タイピングゲームで使用する文章を生成してください\nお題は${promptDom.value} です。\n条件は以下の通りです。\n 1. 句読点を含まないでください\n 2. 文章と文章の間は改行してください。\n 3. 各文章の次に、文章に対応しているすべてひらがなで構成された文章を生成してください。20個の文章を生成してください4 \n 4. 文章の先頭に数字などの余計なものはつけないでください。\n5. 生成時に了解しましたなどの言葉は不要です。本題だけを生成してください`;
     generateText(prompt);
     promptContainer.classList.add('innactive');
     loadingDom.classList.remove('innactive');
@@ -85,18 +85,15 @@ function activeInterval() {
             window.location.href = "./result.html";
         }
     }, 1000);
-}
-
-
-document.onkeydown = (e) => {
-    const key = e.key;
-    console.log(key);
-    parser.check(parser.parsedData, key);  
-    if(parser.isFinished()) {
-        const randomNumber = Math.floor(Math.random() * text1.length);
-        parsedData = parser.build(text2[randomNumber]);
-        japaneseSentence.textContent = text1[randomNumber];
-        hiraganaSentence.textContent = text2[randomNumber];
+    document.onkeydown = (e) => {
+        const key = e.key;
+        console.log(key);
+        parser.check(parser.parsedData, key);  
+        if(parser.isFinished()) {
+            const randomNumber = Math.floor(Math.random() * text1.length);
+            parsedData = parser.build(text2[randomNumber]);
+            japaneseSentence.textContent = text1[randomNumber];
+            hiraganaSentence.textContent = text2[randomNumber];
+        }
     }
 }
-
