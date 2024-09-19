@@ -21,6 +21,8 @@ promptSubmitDom.addEventListener('click', () => {
     loadingDom.classList.remove('innactive');
 });
 
+const tokenObj = await fetch('https://nyobi-backend.onrender.com/generate-token');
+
 async function generateText(prompt) {
     const url = 'https://nyobi-backend.onrender.com/chatgpt';
     try {
@@ -29,7 +31,7 @@ async function generateText(prompt) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({prompt: prompt})
+            body: JSON.stringify({prompt: prompt, token: tokenObj.token}),
         });
         if(!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -50,6 +52,8 @@ async function generateText(prompt) {
         return json
     } catch (error) {
         console.error('Error:', error);
+        alert('エラーが発生しました。もう一度お試しください。');
+        window.location.href = "./game.html";
         return;
     }
 }
