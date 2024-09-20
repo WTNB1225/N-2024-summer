@@ -22,7 +22,7 @@ promptSubmitDom.addEventListener('click', () => {
 });
 
 async function getToken() {
-    const url = 'https://nyobi-backend.onrender.com/generate-token';
+    const url = 'https://nyobi-backend.onrender.com/generate-token'; //One time tokenを取得するためのAPI
     try {
         const response = await fetch(url);
         if(!response.ok) {
@@ -40,7 +40,7 @@ async function getToken() {
 
 async function generateText(prompt) {
     const tokenObj = await getToken();
-    const url = 'https://nyobi-backend.onrender.com/chatgpt';
+    const url = 'https://nyobi-backend.onrender.com/chatgpt'; //OpenAIのAPIを叩くためのAPI
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -53,7 +53,6 @@ async function generateText(prompt) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const json = await response.json();
-        console.log(json);
         const data = json.replace(/\n\n/g, "\n");
         data.split('\n').forEach((value, idx) => {
             if(idx % 2 === 0) {
@@ -107,7 +106,6 @@ function activeInterval() {
     }, 1000);
     document.onkeydown = (e) => {
         const key = e.key;
-        console.log(key);
         parser.check(parser.parsedData, key);  
         if(parser.isFinished()) {
             const randomNumber = Math.floor(Math.random() * text1.length);
