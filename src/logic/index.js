@@ -22,7 +22,7 @@ promptSubmitDom.addEventListener('click', () => {
 });
 
 async function getToken() {
-    const url = 'https://nyobi-backend.onrender.com/generate-token'; //One time tokenを取得するためのAPI
+    const url = 'http://54.95.226.140:8000/generate-token'; //One time tokenを取得するためのAPI
     try {
         const response = await fetch(url);
         if(!response.ok) {
@@ -40,7 +40,7 @@ async function getToken() {
 
 async function generateText(prompt) {
     const tokenObj = await getToken();
-    const url = 'https://nyobi-backend.onrender.com/chatgpt'; //OpenAIのAPIを叩くためのAPI
+    const url = 'http://54.95.226.140:8000/chatgpt'; //OpenAIのAPIを叩くためのAPI
     try {
         const response = await fetch(url, {
             method: 'POST',
