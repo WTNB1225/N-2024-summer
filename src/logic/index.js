@@ -22,7 +22,7 @@ promptSubmitDom.addEventListener('click', () => {
 });
 
 async function getToken() {
-    const url = 'http://54.95.226.140:8000/generate-token'; //One time tokenを取得するためのAPI
+    const url = 'https://wtnbjp.com/generate-token'; //One time tokenを取得するためのAPI
     try {
         const response = await fetch(url);
         if(!response.ok) {
@@ -40,7 +40,7 @@ async function getToken() {
 
 async function generateText(prompt) {
     const tokenObj = await getToken();
-    const url = 'http://54.95.226.140:8000/chatgpt'; //OpenAIのAPIを叩くためのAPI
+    const url = 'https://wtnbjp.com/chatgpt'; //OpenAIのAPIを叩くためのAPI 環境変数を扱うため独自のAPIを作成
     try {
         const response = await fetch(url, {
             method: 'POST',
