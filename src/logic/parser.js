@@ -61,6 +61,8 @@ class Parser {
 
     //入力判定
     check(parsedData, key) {
+        const typeAudio = new Audio("/src/audio/type.mp3");
+        const missAudio = new Audio("/src/audio/miss.mp3");
         const sentence = document.getElementById("sentence");
         const hiraganaSentence = document.getElementById("hiragana-sentence");
         let tempIdx = this.idx2;
@@ -71,6 +73,7 @@ class Parser {
         } else {
             this.temp += key; //別パターンを判定するために入力された文字を一時保存
             if(key == parsedData[this.idx1][this.pattern[this.idx1]][this.idx2]) { //正解した場合
+                typeAudio.play();
                 this.hiraganaTemp += key; //ひらがな色付けのために入力された文字を一時保存
                 sentence.innerHTML = this.colorTypedRoma();
                 if(this.hiraganaMap.get(this.hiraganaTemp) && this.hiraganaMap.get(this.hiraganaTemp).length == 1) { //保存したひらがながhiraganamapのひらがなと一致した場合,そのひらがなを色付け
@@ -123,6 +126,7 @@ class Parser {
                     }
                 }
                 if(key == parsedData[this.idx1][this.pattern[this.idx1]][this.idx2]) {
+                    typeAudio.play();
                     this.hiraganaTemp += key;
                     sentence.innerHTML = this.colorTypedRoma();
                     if(this.hiraganaMap.get(this.hiraganaTemp) && this.hiraganaMap.get(this.hiraganaTemp).length == 1) { //保存したひらがながhiraganamapのひらがなと一致した場合,そのひらがなを色付け
@@ -161,6 +165,7 @@ class Parser {
                     }
                 } else {
                     //どのパターンにも含まれていない場合は、仮保存した文字を削除
+                    missAudio.play();
                     this.temp = this.temp.slice(0, -1);
                     this.numberOfMissedChars++;
                 }
@@ -183,6 +188,8 @@ class Parser {
     //文章を最後まで入力したかを確認するメソッド
     isFinished() {
         if(this.idx2 == this.parsedData[this.idx1][this.pattern[this.idx1]].length && this.idx1 == this.parsedData.length - 1) {
+            const finishAudio = new Audio("/src/audio/finish.mp3");
+            finishAudio.play();
             this.idx1 = 0;
             this.idx2 = 0;
             this.temp = "";
