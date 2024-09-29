@@ -61,8 +61,8 @@ class Parser {
 
     //入力判定
     check(parsedData, key) {
-        const typeAudio = new Audio("/src/audio/type.mp3");
-        const missAudio = new Audio("/src/audio/miss.mp3");
+        const typeAudio = new Audio("../audio/type.mp3");
+        const missAudio = new Audio("../audio/miss.mp3");
         const sentence = document.getElementById("sentence");
         const hiraganaSentence = document.getElementById("hiragana-sentence");
         let tempIdx = this.idx2;
@@ -188,7 +188,7 @@ class Parser {
     //文章を最後まで入力したかを確認するメソッド
     isFinished() {
         if(this.idx2 == this.parsedData[this.idx1][this.pattern[this.idx1]].length && this.idx1 == this.parsedData.length - 1) {
-            const finishAudio = new Audio("/src/audio/finish.mp3");
+            const finishAudio = new Audio("../audio/finish.mp3");
             finishAudio.play();
             this.idx1 = 0;
             this.idx2 = 0;
