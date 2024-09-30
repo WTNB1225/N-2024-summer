@@ -3,8 +3,10 @@
 
 # 使用した外部のツール
 ・OpenAI API
-.UUID
+
+・UUID
 # デプロイ先
 front : GitHub Pages
+
 API server: EC2
 
