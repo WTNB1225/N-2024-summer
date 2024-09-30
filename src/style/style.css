@@ -50,3 +50,7 @@ p {
 .input::placeholder {
     text-align: center;
 }
+
+.back {
+    background-color: rgb(236, 226, 226);
+}
