@@ -16,12 +16,11 @@ let countDownTime = 3;
 let parsedData;
 
 async function fetchThemeLog() {
-    const url = 'https://script.google.com/macros/s/AKfycbyG43hSvObw7CpCJHya5poZCXtrPsXRH8XSZNpxMBNRnT_2Izgk1oen8xHIggdOTw-t/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbwNTaZED0riUF1ZNjH_l-X5PUokS1aiCQ3wKNCqBf7Smt2J-EHlHsmzgj67R9IcxW0A/exec?column=1'; //スプレッドシートからテーマを取得するためのAPI
     try {
-        const response = await fetch(url);
-        if(!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const response = await fetch(url, {
+            mode: 'cors'
+        });
         const json = await response.json();
         return json;
     } catch (error) {
@@ -35,6 +34,7 @@ async function fetchThemeLog() {
 fetchThemeLog().then((json) => {
     console.log(json);
     json.forEach((value) => { //domを生成していく
+        if(value[0] == "") return;
         const log = document.createElement('button');
         log.value = value[0];
         log.textContent = value[0];
@@ -73,15 +73,16 @@ async function getToken() {
 async function generateText(prompt) {
     logDom.classList.add('innactive');
     const tokenObj = await getToken();
-    const spreadsheetURL = 'https://script.google.com/macros/s/AKfycbxAYmfv8OsfobZrECk3tMOv3n9XCizwb-ppHkuL5oUpPAdAvNWFztfDg7AJzh4Sl4Xt/exec';
+    const spreadsheetURL = 'https://script.google.com/macros/s/AKfycbwNTaZED0riUF1ZNjH_l-X5PUokS1aiCQ3wKNCqBf7Smt2J-EHlHsmzgj67R9IcxW0A/exec';
     try {
         const response = await fetch(spreadsheetURL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Allow-Control-Allow-Origin': '*'
             },
             mode: 'no-cors',
-            body: JSON.stringify({theme: promptDom.value}),
+            body: JSON.stringify({theme: promptDom.value, column: 1}),
         });
     } catch (error) {
         console.error('Error:', error);
