@@ -18,11 +18,26 @@ async function fetchRanking() {
 
 fetchRanking().then((json) => {
     console.log(json);
-    json.forEach((value) => {
-        value[0] == ""
+
+    // スコアを抽出してソート
+    const sortedData = json
+        .filter(value => value[0] !== "") // 空の値を除外
+        .map(value => {
+            const parts = value[0].split('\n');
+            return {
+                name: parts[0],
+                score: parseInt(parts[1])
+            };
+        })
+        .sort((a, b) => b.score - a.score); // スコアで降順にソート
+
+    // ソートされたデータをDOMに追加
+    sortedData.forEach((item) => {
         const ranking = document.createElement('div');
-        ranking.textContent = value[0];
-        ranking.className = 'm-2';
+        ranking.textContent = `${item.name}\n${item.score}`;
+        ranking.className = 'ranking-item m-2 p-2 border rounded fs-4'; // Bootstrapのクラスを追加
         listDom.appendChild(ranking);
-    })
-})
+    });
+}).catch((error) => {
+    console.error('Error fetching ranking:', error);
+});
