@@ -1,5 +1,7 @@
 const listDom = document.getElementById('list');
+const loadingDom = document.getElementById('loading');
 async function fetchRanking() {
+    loadingDom.classList.remove('innactive');
     const url = 'https://script.google.com/macros/s/AKfycbwNTaZED0riUF1ZNjH_l-X5PUokS1aiCQ3wKNCqBf7Smt2J-EHlHsmzgj67R9IcxW0A/exec?column=2';
     try {
         const response = await fetch(url);
@@ -17,8 +19,7 @@ async function fetchRanking() {
 }
 
 fetchRanking().then((json) => {
-    console.log(json);
-
+    loadingDom.classList.add('innactive');
     // スコアを抽出してソート
     const sortedData = json
         .filter(value => value[0] !== "") // 空の値を除外
