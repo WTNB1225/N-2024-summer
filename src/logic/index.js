@@ -74,23 +74,6 @@ async function generateText(prompt) {
     logDom.classList.add('innactive');
     const tokenObj = await getToken();
     const spreadsheetURL = 'https://script.google.com/macros/s/AKfycbwNTaZED0riUF1ZNjH_l-X5PUokS1aiCQ3wKNCqBf7Smt2J-EHlHsmzgj67R9IcxW0A/exec';
-    try {
-        const response = await fetch(spreadsheetURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Allow-Control-Allow-Origin': '*'
-            },
-            mode: 'no-cors',
-            body: JSON.stringify({theme: promptDom.value, column: 1}),
-        });
-    } catch (error) {
-        console.error('Error:', error);
-        console.log(response);
-        alert('エラーが発生しました。もう一度お試しください。');
-        window.location.href = "./game.html";
-        return;
-    }
     const url = 'https://wtnbjp.com/chatgpt'; //OpenAIのAPIを叩くためcdのAPI 環境変数を扱うため独自のAPIを作成
     try {
         const response = await fetch(url, {
@@ -115,6 +98,23 @@ async function generateText(prompt) {
         const randomNumber = Math.floor(Math.random() * text1.length);
         parser.setData(text1[randomNumber], text2[randomNumber]);
         activeCountDown();
+        try {
+            const response = await fetch(spreadsheetURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Allow-Control-Allow-Origin': '*'
+                },
+                mode: 'no-cors',
+                body: JSON.stringify({theme: promptDom.value, column: 1}),
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            console.log(response);
+            alert('エラーが発生しました。もう一度お試しください。');
+            window.location.href = "./game.html";
+            return;
+        }
         return json
     } catch (error) {
         console.error('Error:', error);
