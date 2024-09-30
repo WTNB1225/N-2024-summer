@@ -8,6 +8,7 @@ const promptDom = document.getElementById('prompt');
 const promptSubmitDom = document.getElementById('prompt-submit');
 const promptContainer = document.getElementById('prompt-container');
 const loadingDom = document.getElementById('loading');
+const loadingDom2 = document.getElementById('loading2');
 const logDom = document.getElementById('log');
 let text1 = [];
 let text2 = [];
@@ -16,6 +17,7 @@ let countDownTime = 3;
 let parsedData;
 
 async function fetchThemeLog() {
+    loadingDom2.classList.remove('innactive');
     const url = 'https://script.google.com/macros/s/AKfycbwNTaZED0riUF1ZNjH_l-X5PUokS1aiCQ3wKNCqBf7Smt2J-EHlHsmzgj67R9IcxW0A/exec?column=1'; //スプレッドシートからテーマを取得するためのAPI
     try {
         const response = await fetch(url, {
@@ -32,7 +34,7 @@ async function fetchThemeLog() {
 }
 
 fetchThemeLog().then((json) => {
-    console.log(json);
+    loadingDom2.classList.add('innactive');
     json.forEach((value) => { //domを生成していく
         if(value[0] == "") return;
         const log = document.createElement('button');
