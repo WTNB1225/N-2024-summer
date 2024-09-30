@@ -252,7 +252,7 @@ class Parser {
             missed: this.numberOfMissedChars,
             sentences: this.numberOfCorrectSentences,
             accuracy: isNaN(accuracyValue) ? "error" : Math.round(accuracyValue*10) / 10,
-            wpm: (this.numberOfCorrectChars + this.numberOfMissedChars) / 120 * 60
+            wpm: Math.round((this.numberOfCorrectChars + this.numberOfMissedChars) / 120 * 60)
         }
     }
 }
