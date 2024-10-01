@@ -35,7 +35,7 @@ async function fetchThemeLog() {
 
 fetchThemeLog().then((json) => {
     loadingDom2.classList.add('innactive');
-    json.forEach((value) => { //domを生成していく
+    json.reverse().forEach((value) => { //domを生成していく
         if(value[0] == "") return;
         const log = document.createElement('button');
         log.value = value[0];
