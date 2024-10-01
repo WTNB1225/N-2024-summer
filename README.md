@@ -5,6 +5,8 @@
 ・OpenAI API
 
 ・UUID
+
+・Google Spreadsheet
 # デプロイ先
 front : GitHub Pages
 
